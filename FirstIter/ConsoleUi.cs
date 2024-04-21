@@ -47,7 +47,7 @@ namespace FirstIteration
         {
             try
             {
-                int integerValue = new RomanNumberConverter().RomanToIntiger(romanNumeral); // Assuming method name is RomanToInt
+                int integerValue = new RomanNumberConverter().RomanToIntiger(romanNumeral);
                 Console.WriteLine($"Roman numeral: {romanNumeral}");
                 Console.WriteLine($"Integer value: {integerValue}");
             }
