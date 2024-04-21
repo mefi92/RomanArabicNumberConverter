@@ -6,26 +6,7 @@ namespace FirstIteration
     {
         static void Main(string[] args)
         {
-            try
-            {
-                RomanToIntPrinter();
-            }
-            catch (InvalidRomanNumberalException ex)
-            {
-                Console.WriteLine("Invalid input: " + ex.Message);
-            }
-            catch (InvalidRomanNumeralSequenceException ex)
-            {
-                Console.WriteLine("Invalid sequence: " + ex.Message);
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An unexpected error occurred: " + ex.Message);
-            }
+            RomanToIntPrinter();
         }
 
         private static void RomanToIntPrinter()
@@ -51,10 +32,21 @@ namespace FirstIteration
                 Console.WriteLine($"Roman numeral: {romanNumeral}");
                 Console.WriteLine($"Integer value: {integerValue}");
             }
+            catch (InvalidRomanNumberalException ex)
+            {
+                Console.WriteLine("Invalid input: " + ex.Message);
+            }
+            catch (InvalidRomanNumeralSequenceException ex)
+            {
+                Console.WriteLine("Invalid sequence: " + ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
             catch (Exception ex)
             {
                 Console.WriteLine("Error during conversion: " + ex.Message);
-                throw;
             }
         }
 
