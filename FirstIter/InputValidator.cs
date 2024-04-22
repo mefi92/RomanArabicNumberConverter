@@ -20,7 +20,6 @@ namespace FirstIteration
             if (string.IsNullOrEmpty(inputRoman))
                 throw new ArgumentException("Input cannot be null or empty.", nameof(inputRoman));
 
-            inputRoman = inputRoman.ToUpper();
             ValidateRomanNumerals();
             ValidateRepetition();
         }
@@ -37,19 +36,37 @@ namespace FirstIteration
 
                 if (i + 2 < inputRoman.Length)
                 {
+                    
                     char current = inputRoman[i];
                     char next = inputRoman[i + 1];
                     char nextNext = inputRoman[i + 2];
 
+                    // IIV, XXL etc
                     if (RomanNumberMap.GetValue(current) == RomanNumberMap.GetValue(next) &&
                         RomanNumberMap.GetValue(next) < RomanNumberMap.GetValue(nextNext))
                     {
                         throw new InvalidRomanNumeralSequenceException($"Invalid numeral sequence involving incorrect subtraction: {current}{next}{nextNext}");
                     }
+
+                    // VIV, LVL etc
+                    if (RomanNumberMap.GetValue(current) == RomanNumberMap.GetValue(nextNext) &&
+                        RomanNumberMap.GetValue(current) > RomanNumberMap.GetValue(next) &&
+                        ContainsFive(RomanNumberMap.GetValue(current)))
+                    {
+                        throw new InvalidRomanNumeralSequenceException($"Invalid numeral sequence involving incorrect subtraction: {current}{next}{nextNext}");
+                    }
+
+                    // IVI etc
+                    if (RomanNumberMap.GetValue(current) == RomanNumberMap.GetValue(nextNext) &&
+                        RomanNumberMap.GetValue(current) < RomanNumberMap.GetValue(next) &&
+                        ContainsFive(RomanNumberMap.GetValue(next)))
+                    {
+                        throw new InvalidRomanNumeralSequenceException($"Invalid numeral sequence involving incorrect subtraction: {current}{next}{nextNext}");
+                    }
+
                 }
             }
         }
-
 
         private void ValidateRepetition()
         {
@@ -59,28 +76,34 @@ namespace FirstIteration
             foreach (char c in inputRoman)
             {
                 if (c == previousChar)
+                {
                     counter++;
+                }
                 else
                 {
-
-                    if (counter > 1 && (previousChar == 'V' || previousChar == 'L' || previousChar == 'D'))
-                        throw new ExcessiveRepetitionException($"Invalid Roman numeral: {previousChar} cannot be repeated.");
-
-                    if (counter > 3)
-                        throw new ExcessiveRepetitionException("Invalid Roman numeral: A character repeats more than three times consecutively.");
-
+                    CheckRepetition(previousChar, counter);
                     previousChar = c;
                     counter = 1;
                 }
-
-                if (counter > 1 && (previousChar == 'V' || previousChar == 'L' || previousChar == 'D'))
-                    throw new ExcessiveRepetitionException($"Invalid Roman numeral: {previousChar} cannot be repeated.");
-
-
-                if (counter > 3)                
-                    throw new ExcessiveRepetitionException("Invalid Roman numeral: A character repeats more than three times consecutively.");                
             }
+
+            CheckRepetition(previousChar, counter); 
         }
+
+        private void CheckRepetition(char previousChar, int counter)
+        {
+            if (counter > 1 && (previousChar == 'V' || previousChar == 'L' || previousChar == 'D'))
+                throw new ExcessiveRepetitionException($"Invalid Roman numeral: {previousChar} cannot be repeated.");
+
+            if (counter > 3)
+                throw new ExcessiveRepetitionException($"Invalid Roman numeral: {previousChar} repeats more than three times consecutively.");
+        }
+
+        public static bool ContainsFive(int number)
+        {            
+            return number.ToString().Contains('5');
+        }
+
 
 
 

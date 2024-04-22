@@ -6,7 +6,7 @@ namespace FirstIteration
     {
         public int RomanToIntiger(string roman)
         {
-            roman = roman.ToUpper();
+            roman = roman.ToUpper().Trim();
 
             new InputValidator(roman);           
 

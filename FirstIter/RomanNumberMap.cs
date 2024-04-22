@@ -18,6 +18,7 @@ namespace FirstIteration
             {'M', 1000}
         };
 
+
         public static bool Contains(char numeral)
         {
             return romanValues.ContainsKey(numeral);

@@ -9,20 +9,22 @@ namespace FirstIterationTets
         public void RomanToIntiger_ValidInput_ReturnsNoError()
         {
             string user_input = "MMCCCLXV";
+            int expected = 2365;
 
             int result = new RomanNumberConverter().RomanToIntiger(user_input);
 
-            Assert.AreEqual(2365, result);
+            Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
         public void RomanToIntiger_LowerCaseInput_ReturnsNoError()
         {
             string user_input = "mmccclxv";
+            int expected = 2365;
 
             int result = new RomanNumberConverter().RomanToIntiger(user_input);
 
-            Assert.AreEqual(2365, result);
+            Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
@@ -38,10 +40,63 @@ namespace FirstIterationTets
         public void RomanToIntiger_InvalidRomanSequenceInput_ReturnsInvalidRomanNumeralSequenceException()
         {
             string user_input = "iiv";
+            int expected = 5;
 
             int result = new RomanNumberConverter().RomanToIntiger(user_input);
 
-            Assert.AreEqual(5, result);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void RomanToIntiger_WhiteSpacesPlusValidInput_ReturnsNoError()
+        {
+            string user_input = " V";
+            int expected = 5;
+
+            int result = new RomanNumberConverter().RomanToIntiger(user_input);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void RomanToIntiger_LotsOfWhiteSpacesBeforeAndAfterButValidInput_ReturnsNoError()
+        {
+            string user_input = "   MMMCMXCIX   ";
+            
+            int expected = 3999;
+
+            int result = new RomanNumberConverter().RomanToIntiger(user_input);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidRomanNumeralSequenceException))]
+        public void RomanToIntiger_BiggestNumberInput_ReturnsInvalidRomanNumeralSequenceException()
+        {
+            string user_input = "MMMDCDLXLVIV";            
+
+            new RomanNumberConverter().RomanToIntiger(user_input);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RomanToIntiger_WhiteSpacesInput_ReturnsArgumentException()
+        {
+            string user_input = "    ";            
+
+            new RomanNumberConverter().RomanToIntiger(user_input);
+        }
+
+        [TestMethod]
+        public void RomanToIntiger_NinihundredRomanInput_ReturnsNoError()
+        {
+            string user_input = "CM";
+            int expected = 900;
+
+            int result = new RomanNumberConverter().RomanToIntiger(user_input);
+
+            Assert.AreEqual(expected, result);
         }
 
 
@@ -49,32 +104,7 @@ namespace FirstIterationTets
 
 
 
-        //[TestMethod]
-        //[ExpectedException(typeof(Exception))]
-        //public void RomanToIntiger_InvalidRomanNumber_Excpetion()
-        //{
-        //    string user_input = "iiii";
 
-        //    new RomanNumberConverter().RomanToIntiger(user_input);           
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(Exception))]
-        //public void RomanToIntiger_InvalidRomanNumber_Excpetiona()
-        //{
-        //    string user_input = "vv";
-
-        //    new RomanNumberConverter().RomanToIntiger(user_input);
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(Exception))]
-        //public void RomanToIntiger_InvalidRomanNumber_Excpetionb()
-        //{
-        //    string user_input = "vx";
-
-        //    new RomanNumberConverter().RomanToIntiger(user_input);
-        //}
     }
 
 }
