@@ -1,10 +1,25 @@
 using FirstIteration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FirstIterationTets
 {
     [TestClass]
     public class RomanNumberConverterTest
     {
+        private TestContext testContextInstance;
+        public TestContext TestContext
+        {
+            get { return testContextInstance; }
+            set { testContextInstance = value; }
+        }
+
+
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\output.csv", "output#csv", DataAccessMethod.Sequential), DeploymentItem("output.csv"), TestMethod]
+        public void AddIntegers_FromDataSourceTest()
+        {
+            string asd = TestContext.DataRow["ValueOne"].ToString();
+        }
+
         [TestMethod]
         public void RomanToIntiger_ValidInput_ReturnsNoError()
         {

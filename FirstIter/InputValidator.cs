@@ -56,10 +56,11 @@ namespace FirstIteration
                         throw new InvalidRomanNumeralSequenceException($"Invalid numeral sequence involving incorrect subtraction: {current}{next}{nextNext}");
                     }
 
-                    // IVI etc
+                    // IVI, VIX etc
                     if (RomanNumberMap.GetValue(current) == RomanNumberMap.GetValue(nextNext) &&
                         RomanNumberMap.GetValue(current) < RomanNumberMap.GetValue(next) &&
-                        ContainsFive(RomanNumberMap.GetValue(next)))
+                        ContainsFive(RomanNumberMap.GetValue(next)) ||
+                        RomanNumberMap.GetValue(current) < RomanNumberMap.GetValue(nextNext)) 
                     {
                         throw new InvalidRomanNumeralSequenceException($"Invalid numeral sequence involving incorrect subtraction: {current}{next}{nextNext}");
                     }

@@ -20,4 +20,10 @@
     <ProjectReference Include="..\FirstIter\FirstIteration.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="output.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
