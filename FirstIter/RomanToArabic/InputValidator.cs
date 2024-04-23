@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FirstIteration
+namespace FirstIteration.RomanToArabic
 {
     public class InputValidator
     {
         private string inputRoman;
-        public InputValidator(string input) 
+        public InputValidator(string input)
         {
             inputRoman = input;
             RomanInputValidator();
@@ -36,7 +36,7 @@ namespace FirstIteration
 
                 if (i + 2 < inputRoman.Length)
                 {
-                    
+
                     char current = inputRoman[i];
                     char next = inputRoman[i + 1];
                     char nextNext = inputRoman[i + 2];
@@ -60,7 +60,7 @@ namespace FirstIteration
                     if (RomanNumberMap.GetValue(current) == RomanNumberMap.GetValue(nextNext) &&
                         RomanNumberMap.GetValue(current) < RomanNumberMap.GetValue(next) &&
                         ContainsFive(RomanNumberMap.GetValue(next)) ||
-                        RomanNumberMap.GetValue(current) < RomanNumberMap.GetValue(nextNext)) 
+                        RomanNumberMap.GetValue(current) < RomanNumberMap.GetValue(nextNext))
                     {
                         throw new InvalidRomanNumeralSequenceException($"Invalid numeral sequence involving incorrect subtraction: {current}{next}{nextNext}");
                     }
@@ -88,7 +88,7 @@ namespace FirstIteration
                 }
             }
 
-            CheckRepetition(previousChar, counter); 
+            CheckRepetition(previousChar, counter);
         }
 
         private void CheckRepetition(char previousChar, int counter)
@@ -101,7 +101,7 @@ namespace FirstIteration
         }
 
         public static bool ContainsFive(int number)
-        {            
+        {
             return number.ToString().Contains('5');
         }
 

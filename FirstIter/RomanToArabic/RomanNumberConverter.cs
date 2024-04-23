@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace FirstIteration
+namespace FirstIteration.RomanToArabic
 {
     public class RomanNumberConverter
     {
@@ -8,7 +8,7 @@ namespace FirstIteration
         {
             roman = roman.ToUpper().Trim();
 
-            new InputValidator(roman);           
+            new InputValidator(roman);
 
             int result = 0;
             int previousValue = 0;
@@ -17,10 +17,10 @@ namespace FirstIteration
             {
                 int currentValue = RomanNumberMap.GetValue(roman[i]);
 
-                if (currentValue < previousValue)                
-                    result -= currentValue;                
-                else                
-                    result += currentValue;                
+                if (currentValue < previousValue)
+                    result -= currentValue;
+                else
+                    result += currentValue;
 
                 previousValue = currentValue;
             }

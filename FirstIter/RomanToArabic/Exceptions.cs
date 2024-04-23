@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FirstIteration
+namespace FirstIteration.RomanToArabic
 {
     public class InvalidRomanNumberalException : Exception
     {

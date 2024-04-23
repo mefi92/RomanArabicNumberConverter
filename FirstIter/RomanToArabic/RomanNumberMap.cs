@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FirstIteration
+namespace FirstIteration.RomanToArabic
 {
     public class RomanNumberMap
     {
@@ -26,9 +26,9 @@ namespace FirstIteration
 
         public static int GetValue(char numeral)
         {
-            if (romanValues.TryGetValue(numeral, out int value))            
-                return value;            
-                
+            if (romanValues.TryGetValue(numeral, out int value))
+                return value;
+
             throw new InvalidRomanNumberalException($"Invalid Roman numeral character: {numeral}");
         }
 
@@ -40,12 +40,12 @@ namespace FirstIteration
             int currentValue = romanValues[current];
             int nextValue = romanValues[next];
 
-    
+
             if (currentValue < nextValue)
-            {        
-                return (current == 'I' && (next == 'V' || next == 'X')) ||
-                       (current == 'X' && (next == 'L' || next == 'C')) ||
-                       (current == 'C' && (next == 'D' || next == 'M'));
+            {
+                return current == 'I' && (next == 'V' || next == 'X') ||
+                       current == 'X' && (next == 'L' || next == 'C') ||
+                       current == 'C' && (next == 'D' || next == 'M');
             }
 
             return currentValue >= nextValue;
