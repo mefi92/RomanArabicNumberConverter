@@ -11,7 +11,7 @@ namespace FirstIteration.ArabicToRoman
     {
         public static string ArabicToRoman(int num)
         {
-            if (num < 0 || num > 3999)
+            if (num < 1 || num > 3999)
                 throw new ArgumentException();
 
             var roman = new StringBuilder();

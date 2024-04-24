@@ -23,10 +23,10 @@ namespace FirstIteration
             switch (userInput.ToUpper())
             {
                 case "R":
-                    RomanToIntPrinter();
+                    ConvertAndPrint(PrintRomanOutput);
                     return true;
                 case "A":
-                    ArabicToRomanPrinter();
+                    ConvertAndPrint(PrintArabicOutput);
                     return true;
                 case "Q":
                     return false;
@@ -44,36 +44,40 @@ namespace FirstIteration
             Console.WriteLine("Exit (Q)");
         }
 
-        private static void RomanToIntPrinter()
+        private static void ConvertAndPrint(Action<string> converterType)
         {
-            Console.WriteLine("Enter Roman numeral to convert or Q to quit:");
+            string converterName = GetConverterName(converterType);
+
+            Console.WriteLine($"Enter {converterName} numeral to convert or Q to quit:");
             while (true)
             {
                 string userInput = Console.ReadLine().Trim().ToUpper();
                 if (userInput == "Q")
                     break;
-                PrintOutput(userInput);
+                converterType(userInput);
             }
-        }
+        }        
 
-        private static void ArabicToRomanPrinter()
+        private static void PrintArabicOutput(string arabicNumeral)
         {
-            Console.WriteLine("Enter Arabic number to convert or Q to quit:");
-            string input = Console.ReadLine().Trim();
-            if (input.ToUpper() == "Q") return;
-
-            if (int.TryParse(input, out int arabic))
-            {
-                string roman = ArabicNumberConverter.ArabicToRoman(arabic);
-                Console.WriteLine($"Roman numeral: {roman}");
-            }
+            if (int.TryParse(arabicNumeral, out int arabicInt))
+                try
+                {
+                    string roman = ArabicNumberConverter.ArabicToRoman(arabicInt);
+                    Console.WriteLine($"Roman numeral: {roman}");
+                    Console.WriteLine($"Integer value: {arabicNumeral}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error during conversion: {ex.Message}");
+                }
             else
             {
                 Console.WriteLine("Invalid input. Please enter a valid Arabic number.");
             }
         }
 
-        private static void PrintOutput(string romanNumeral)
+        private static void PrintRomanOutput(string romanNumeral)
         {
             try
             {
@@ -91,6 +95,16 @@ namespace FirstIteration
         {
             Console.Write("Choose conversion type (R/A/Q): ");
             return Console.ReadLine();
+        }
+
+        private static string GetConverterName(Action<string> converterType)
+        {
+            string converterName;
+            if (converterType == PrintRomanOutput)
+                converterName = "Roman";
+            else
+                converterName = "Arabic";
+            return converterName;
         }
     }
 }
