@@ -1,4 +1,5 @@
 using FirstIteration;
+using FirstIteration.ArabicToRoman;
 using FirstIteration.RomanToArabic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -113,6 +114,19 @@ namespace FirstIterationTets
             int result = new RomanNumberConverter().RomanToIntiger(user_input);
 
             Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void RomanToIntiger_AllValidRomanInputs_ReturnsNoError()
+        {
+            for (int i = 1; i <= 3999; i++)
+            {
+                string roman = ArabicNumberConverter.ArabicToRoman(i);
+
+                int result = new RomanNumberConverter().RomanToIntiger(roman);
+
+                Assert.AreEqual(i, result);
+            }
         }
 
 
