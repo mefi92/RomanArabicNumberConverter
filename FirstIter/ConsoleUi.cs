@@ -30,10 +30,10 @@ namespace FirstIteration
             switch (choice)
             {
                 case ConversionType.RomanToArabic:
-                    ConvertAndPrint(PrintRomanOutput);
+                    ProcessConversion(PrintRomanOutput,"Roman");
                     return true;
                 case ConversionType.ArabicToRoman:
-                    ConvertAndPrint(PrintArabicOutput);
+                    ProcessConversion(PrintArabicOutput, "Arabic");
                     return true;
                 case ConversionType.Quit:
                     return false;
@@ -51,26 +51,23 @@ namespace FirstIteration
             Console.WriteLine("Exit (Q)");
         }
 
-        private static void ConvertAndPrint(Action<string> converterType)
+        private static void ProcessConversion(Action<string> conversionMethod, string numeralType)
         {
-            string converterName = GetConverterName(converterType);
+            Console.WriteLine($"Enter {numeralType} numeral to convert or Q to quit:");
 
-            Console.WriteLine($"Enter {converterName} numeral to convert or Q to quit:");
-            while (true)
+            string userInput;
+            while ((userInput = Console.ReadLine().Trim().ToUpper()) != "Q")
             {
-                string userInput = Console.ReadLine().Trim().ToUpper();
-                if (userInput == "Q")
-                    break;
-                converterType(userInput);
+                conversionMethod(userInput);
             }
         }        
 
         private static void PrintArabicOutput(string arabicNumeral)
         {
-            if (int.TryParse(arabicNumeral, out int arabicInt))
+            if (int.TryParse(arabicNumeral, out int number))
                 try
                 {
-                    var roman = ArabicNumberConverter.ArabicToRoman(arabicInt);
+                    string roman = ArabicNumberConverter.ArabicToRoman(number);
                     PrintOriginalAndCalculatedNumbers(arabicNumeral, roman);
                 }
                 catch (Exception ex)
@@ -113,16 +110,6 @@ namespace FirstIteration
         {
             Console.WriteLine($"Roman numeral: {roman}");
             Console.WriteLine($"Integer value: {arabicNumeral}");
-        }
-
-        private static string GetConverterName(Action<string> converterType)
-        {
-            string converterName;
-            if (converterType == PrintRomanOutput)
-                converterName = "Roman";
-            else
-                converterName = "Arabic";
-            return converterName;
-        }
+        } 
     }
 }
