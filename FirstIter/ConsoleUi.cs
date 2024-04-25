@@ -6,6 +6,13 @@ namespace FirstIteration
 {
     public class ConsoleUi
     {
+        enum ConversionType
+        {
+            RomanToArabic,
+            ArabicToRoman,
+            Quit
+        }
+
         static void Main(string[] args)
         {
             while (true)
@@ -18,17 +25,17 @@ namespace FirstIteration
 
         private static bool ConverterSelector()
         {
-            string userInput = AskForConverterChoice();
+            ConversionType choice = GetConversationChoice();
 
-            switch (userInput.ToUpper())
+            switch (choice)
             {
-                case "R":
+                case ConversionType.RomanToArabic:
                     ConvertAndPrint(PrintRomanOutput);
                     return true;
-                case "A":
+                case ConversionType.ArabicToRoman:
                     ConvertAndPrint(PrintArabicOutput);
                     return true;
-                case "Q":
+                case ConversionType.Quit:
                     return false;
                 default:
                     Console.WriteLine("Invalid choice. Please select R, A, or Q.");
@@ -63,9 +70,8 @@ namespace FirstIteration
             if (int.TryParse(arabicNumeral, out int arabicInt))
                 try
                 {
-                    string roman = ArabicNumberConverter.ArabicToRoman(arabicInt);
-                    Console.WriteLine($"Roman numeral: {roman}");
-                    Console.WriteLine($"Integer value: {arabicNumeral}");
+                    var roman = ArabicNumberConverter.ArabicToRoman(arabicInt);
+                    PrintOriginalAndCalculatedNumbers(arabicNumeral, roman);
                 }
                 catch (Exception ex)
                 {
@@ -75,15 +81,14 @@ namespace FirstIteration
             {
                 Console.WriteLine("Invalid input. Please enter a valid Arabic number.");
             }
-        }
+        }        
 
         private static void PrintRomanOutput(string romanNumeral)
         {
             try
             {
-                int integerValue = new RomanNumberConverter().RomanToIntiger(romanNumeral);
-                Console.WriteLine($"Roman numeral: {romanNumeral}");
-                Console.WriteLine($"Integer value: {integerValue}");
+                var arabicInt = new RomanNumberConverter().RomanToIntiger(romanNumeral);
+                PrintOriginalAndCalculatedNumbers(arabicInt.ToString(), romanNumeral);
             }
             catch (Exception ex)
             {
@@ -91,10 +96,23 @@ namespace FirstIteration
             }
         }
 
-        private static string AskForConverterChoice()
+        private static ConversionType GetConversationChoice()
         {
             Console.Write("Choose conversion type (R/A/Q): ");
-            return Console.ReadLine();
+            string input = Console.ReadLine().ToUpper();
+            switch (input)
+            {
+                case "R": return ConversionType.RomanToArabic;
+                case "A": return ConversionType.ArabicToRoman;
+                case "Q": return ConversionType.Quit;
+                default: throw new ArgumentException("Invalid input. Please select R, A, or Q.");
+            }
+        }
+
+        private static void PrintOriginalAndCalculatedNumbers(string arabicNumeral, string roman)
+        {
+            Console.WriteLine($"Roman numeral: {roman}");
+            Console.WriteLine($"Integer value: {arabicNumeral}");
         }
 
         private static string GetConverterName(Action<string> converterType)
